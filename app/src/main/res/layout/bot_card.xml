@@ -7,23 +7,30 @@
         <variable
             name="bots"
             type="com.rebus.settingstelegrambot.data.db.roommodels.BotsData" />
+
+        <variable
+            name="itemClick"
+            type="com.rebus.settingstelegrambot.ui.event.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="18dp">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
+            style="?attr/materialCardViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="match_parent"
+            android:layout_margin="18dp"
+            android:onClick="@{ () -> itemClick.onClickListener(bots) }"
+            app:cardBackgroundColor="@color/purple_200"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <include
                 layout="@layout/bot_card_content"
-                app:bots="@{ bots }"/>
+                app:bots="@{ bots }" />
 
         </com.google.android.material.card.MaterialCardView>
 
