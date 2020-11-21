@@ -1,22 +1,14 @@
-package com.rebus.settingstelegrambot.data.dao
+package com.rebus.settingstelegrambot.data.db.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import com.rebus.settingstelegrambot.data.models.BotModel
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.rebus.settingstelegrambot.data.db.roommodels.BotsData
 
 @Dao
 interface BotDao {
-    @Query("SELECT * FROM bots")
-    fun getAll(): List<BotModel>
+    @Query("SELECT * FROM bots_data ORDER BY id ASC")
+    fun getAll(): LiveData<List<BotsData>>
 
-    @Query("SELECT * FROM bots WHERE id IN (:botId)")
-    fun getBotId(botId: Int): BotModel
-
-    @Insert
-    fun addBot(botInfo: BotModel)
-
-    @Delete
-    fun deleteBot(botInfo: BotModel)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addBot(botInfo: BotsData)
 }

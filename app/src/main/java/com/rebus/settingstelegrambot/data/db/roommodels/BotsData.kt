@@ -1,17 +1,12 @@
-package com.rebus.settingstelegrambot.data.roommodels
+package com.rebus.settingstelegrambot.data.db.roommodels
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "bots_data")
 data class BotsData(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
-
-    @ColumnInfo(name = "bot_name")
     val botName: String,
-
-    @ColumnInfo(name = "bot_token")
     val botToken: String
 )
