@@ -48,18 +48,14 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     private fun insertDB() {
         fab_add_bot.setOnClickListener {
-            botsViewModel.addBot(
-                BotsData(
-                    6, "test", "test:token"
-                )
-            )
+            BottomSheetFragment(botsViewModel).show(supportFragmentManager, "bottomSheetDialog")
         }
     }
 
     private fun getAllBots() {
         botsViewModel.readAllData.observe(this, {
             setItemBotsCollections(it)
-            Log.d("TSET", it.toString())
+
             if (it.isNotEmpty()) {
                 bots_list.apply {
                     (adapter as BotsAdapter).notifyItemInserted(botsArray.last().id)
