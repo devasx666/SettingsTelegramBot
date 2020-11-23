@@ -8,21 +8,21 @@ import com.rebus.settingstelegrambot.data.repository.WebHookRepository
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class TelegramViewModel(private val botToken: String) : ViewModel() {
+class TelegramViewModel(botToken: String) : ViewModel() {
     private val viewModelJob = Job()
     private val coroutineContext: CoroutineContext = Dispatchers.Main
 
     private val scope = CoroutineScope(viewModelJob + coroutineContext)
 
     private val repository: WebHookRepository =
-        WebHookRepository(NetworkService(botToken).buildService(SetWebHook::class.java), botToken)
+        WebHookRepository(NetworkService(botToken).buildService(SetWebHook::class.java))
 
     val setWebHook = MutableLiveData<Boolean>()
 
-    fun setConnections() {
+    fun setConnections(botUrl: String) {
         scope.launch {
             withContext(Dispatchers.IO) {
-                val connectionTelegram = repository.setWebHook()
+                val connectionTelegram = repository.setWebHook(botUrl)
                 setWebHook.postValue(connectionTelegram)
             }
         }
