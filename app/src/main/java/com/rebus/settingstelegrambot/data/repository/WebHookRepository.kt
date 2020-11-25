@@ -1,5 +1,6 @@
 package com.rebus.settingstelegrambot.data.repository
 
+import com.rebus.settingstelegrambot.data.models.StatusWebHook
 import com.rebus.settingstelegrambot.data.path.SetWebHook
 
 class WebHookRepository(private val api: SetWebHook) :
@@ -14,5 +15,16 @@ class WebHookRepository(private val api: SetWebHook) :
         )
 
         return setConnectionTelegram?.ok
+    }
+
+    suspend fun statusWebHook(): StatusWebHook? {
+        val getStatusTelegram = safeApiCell(
+            call = {
+                api.getStatus().await()
+            },
+            errorMessage = "Error get status webhook"
+        )
+
+        return getStatusTelegram
     }
 }

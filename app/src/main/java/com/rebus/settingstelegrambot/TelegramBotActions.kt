@@ -1,17 +1,15 @@
 package com.rebus.settingstelegrambot
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.rebus.settingstelegrambot.ui.factory.TelegramViewModelFactory
 import com.rebus.settingstelegrambot.ui.viewmodel.TelegramViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.container
-import kotlinx.android.synthetic.main.fragment_telegram_bot_actions.*
 import kotlinx.android.synthetic.main.fragment_telegram_bot_actions.view.*
 
 class TelegramBotActions : Fragment() {
@@ -27,6 +25,7 @@ class TelegramBotActions : Fragment() {
         setWebHook()
 
         setConnection(rootView)
+        statusConnection(rootView)
 
         return rootView
     }
@@ -35,6 +34,12 @@ class TelegramBotActions : Fragment() {
         root.set_webhook.setOnClickListener {
             val botUrl = root.bot_url_input.text.toString()
             telegramViewModel.setConnections(botUrl)
+        }
+    }
+
+    private fun statusConnection(root: View) {
+        root.status_webhook.setOnClickListener {
+            telegramViewModel.getStatusConnections()
         }
     }
 

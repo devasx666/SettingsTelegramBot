@@ -28,5 +28,13 @@ class TelegramViewModel(botToken: String) : ViewModel() {
         }
     }
 
+    fun getStatusConnections() {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                val statusTelegram = repository.statusWebHook()
+            }
+        }
+    }
+
     fun cancelAllRequests() = coroutineContext.cancel()
 }
