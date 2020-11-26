@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.rebus.settingstelegrambot.data.db.AppDatabase
 import com.rebus.settingstelegrambot.data.db.repository.BotRepository
 import com.rebus.settingstelegrambot.data.db.roommodels.BotsData
+import com.rebus.settingstelegrambot.data.db.roommodels.BotsWebHook
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -24,6 +25,12 @@ class BotsViewModel(application: Application) : ViewModel() {
     fun addBot(bot: BotsData) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addBot(bot)
+        }
+    }
+
+    fun addBotWebHook(botWebHook: BotsWebHook) {
+        viewModelScope.launch(Dispatchers.IO) {
+
         }
     }
 }

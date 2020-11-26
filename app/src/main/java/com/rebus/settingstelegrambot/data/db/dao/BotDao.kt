@@ -1,7 +1,10 @@
 package com.rebus.settingstelegrambot.data.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.rebus.settingstelegrambot.data.db.roommodels.BotsData
 
 @Dao
