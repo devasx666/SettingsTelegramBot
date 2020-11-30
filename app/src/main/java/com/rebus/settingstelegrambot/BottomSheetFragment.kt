@@ -27,7 +27,7 @@ class BottomSheetFragment(private val botsViewModel: BotsViewModel) : BottomShee
 
             botsViewModel.addBot(
                 BotsData(
-                    (0 until 1000).random(), botName, botToken
+                    (0 until 100000).random(), botName, botToken
                 )
             )
         }

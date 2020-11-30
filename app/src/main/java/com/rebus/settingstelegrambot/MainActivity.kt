@@ -1,10 +1,14 @@
 package com.rebus.settingstelegrambot
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rebus.settingstelegrambot.data.BOT_TOKEN
+import com.rebus.settingstelegrambot.data.ID
 import com.rebus.settingstelegrambot.data.db.roommodels.BotsData
 import com.rebus.settingstelegrambot.ui.adapters.BotsAdapter
 import com.rebus.settingstelegrambot.ui.event.OnClickListener
@@ -28,7 +32,15 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     override fun <T> onClickListener(item: T) {
-        openBotActions(TelegramBotActions())
+        val bundle = Bundle()
+        bundle.putInt(ID, (item as BotsData).id)
+        bundle.putString(BOT_TOKEN, (item as BotsData).botToken)
+
+        fab_add_bot.visibility = View.GONE
+
+        val fragmentTelegramBotActions = TelegramBotActions()
+        fragmentTelegramBotActions.arguments = bundle
+        openBotActions(fragmentTelegramBotActions)
     }
 
     private fun recyclerBotsInit() {
@@ -42,7 +54,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     private fun init() {
         val botViewModelFactory = BotViewModelFactory(application)
-        botsViewModel = ViewModelProviders.of(this, botViewModelFactory).get(BotsViewModel::class.java)
+        botsViewModel =
+            ViewModelProviders.of(this, botViewModelFactory).get(BotsViewModel::class.java)
     }
 
     private fun insertDB() {

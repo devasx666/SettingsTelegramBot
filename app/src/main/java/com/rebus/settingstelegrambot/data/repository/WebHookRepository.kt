@@ -5,10 +5,10 @@ import com.rebus.settingstelegrambot.data.path.SetWebHook
 
 class WebHookRepository(private val api: SetWebHook) :
     BaseRepository() {
-    suspend fun setWebHook(botUrl: String): Boolean? {
+    suspend fun setWebHook(botUrl: String, botToken: String): Boolean? {
         val setConnectionTelegram = safeApiCell(
             call = {
-                api.setWebHook("https://${botUrl}")
+                api.setWebHook("https://${botUrl}/bot${botToken}")
                     .await()
             },
             errorMessage = "Error set connection WebHook for telegram bot"

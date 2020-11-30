@@ -2,6 +2,7 @@ package com.rebus.settingstelegrambot.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.rebus.settingstelegrambot.data.models.StatusWebHook
 import com.rebus.settingstelegrambot.data.objects.NetworkService
 import com.rebus.settingstelegrambot.data.path.SetWebHook
 import com.rebus.settingstelegrambot.data.repository.WebHookRepository
@@ -18,11 +19,12 @@ class TelegramViewModel(botToken: String) : ViewModel() {
         WebHookRepository(NetworkService(botToken).buildService(SetWebHook::class.java))
 
     val setWebHook = MutableLiveData<Boolean>()
+    var statusWebHook = MutableLiveData<StatusWebHook>()
 
-    fun setConnections(botUrl: String) {
+    fun setConnections(botUrl: String, botToken: String) {
         scope.launch {
             withContext(Dispatchers.IO) {
-                val connectionTelegram = repository.setWebHook(botUrl)
+                val connectionTelegram = repository.setWebHook(botUrl, botToken)
                 setWebHook.postValue(connectionTelegram)
             }
         }
@@ -31,7 +33,7 @@ class TelegramViewModel(botToken: String) : ViewModel() {
     fun getStatusConnections() {
         scope.launch {
             withContext(Dispatchers.IO) {
-                val statusTelegram = repository.statusWebHook()
+                statusWebHook.postValue(repository.statusWebHook()!!)
             }
         }
     }

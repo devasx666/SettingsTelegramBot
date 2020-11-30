@@ -1,6 +1,5 @@
 package com.rebus.settingstelegrambot.data.db.dao
 
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,6 +11,6 @@ interface BotWebHookDao {
     @Query("SELECT * FROM bots_webhook WHERE id IN (:id)")
     suspend fun getBotWebHook(id: Int): BotsWebHook
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addBotWebHook(botsWebHook: BotsWebHook)
 }

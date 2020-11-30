@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "bots_webhook")
 data class BotsWebHook(
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val ipWebHook: String
 )
