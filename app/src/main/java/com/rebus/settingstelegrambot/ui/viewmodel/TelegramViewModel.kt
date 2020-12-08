@@ -33,7 +33,9 @@ class TelegramViewModel(botToken: String) : ViewModel() {
     fun getStatusConnections() {
         scope.launch {
             withContext(Dispatchers.IO) {
-                statusWebHook.postValue(repository.statusWebHook()!!)
+                if (repository.statusWebHook() != null) {
+                    statusWebHook.postValue(repository.statusWebHook()!!)
+                }
             }
         }
     }
