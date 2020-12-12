@@ -27,6 +27,7 @@ open class BaseRepository {
         errorMessage: String
     ): Result<T> {
         val response = call.invoke()
+
         if (response.isSuccessful) return Result.Success(response.body()!!)
 
         return Result.Error(IOException("$errorMessage ->> ${response.message()}"))

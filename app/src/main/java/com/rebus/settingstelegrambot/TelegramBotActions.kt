@@ -16,6 +16,7 @@ import com.rebus.settingstelegrambot.ui.viewmodel.TelegramViewModel
 import kotlinx.android.synthetic.main.actions_buttons.view.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_telegram_bot_actions.view.*
+import kotlinx.android.synthetic.main.info_webhook.view.*
 
 class TelegramBotActions : Fragment() {
     private lateinit var telegramViewModel: TelegramViewModel
@@ -32,7 +33,7 @@ class TelegramBotActions : Fragment() {
         init(botToken!!)
 
         getBotUrl(rootView, idBot!!)
-        setWebHookSign()
+        setWebHookSign(rootView)
         getStatusSign(rootView)
 
         setConnection(rootView, idBot, botToken)
@@ -74,7 +75,7 @@ class TelegramBotActions : Fragment() {
             .get(BotsViewModel::class.java)
     }
 
-    private fun setWebHookSign() {
+    private fun setWebHookSign(root: View) {
         telegramViewModel.setWebHook.observe(this, {
             telegramViewModel.cancelAllRequests()
             val status = getStatusSet()
@@ -83,7 +84,7 @@ class TelegramBotActions : Fragment() {
                 activity!!.container,
                 "Set $status Webhook",
                 Snackbar.LENGTH_SHORT
-            ).show()
+            ).setAnchorView(root.set_webhook).show()
         })
     }
 
@@ -91,8 +92,15 @@ class TelegramBotActions : Fragment() {
         if (telegramViewModel.setWebHook.value != null) telegramViewModel.setWebHook.value else false
 
     private fun getStatusSign(root: View) {
+        telegramViewModel.cancelAllRequests()
         telegramViewModel.statusWebHook.observe(this, {
-            root.status_webhook_label.text = it.ok.toString()
+            root.info_webhook_layout.visibility = View.VISIBLE
+            root.status_webhook_info.text = it.ok.toString()
+
+            it.result.let { result ->
+                root.ip_webhook_info.text = result?.ipAddress
+                root.describe_webhook_info.text = result?.lastErrorMessage
+            }
         })
     }
 }
