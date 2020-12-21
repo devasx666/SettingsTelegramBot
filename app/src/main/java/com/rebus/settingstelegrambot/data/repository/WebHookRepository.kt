@@ -18,11 +18,13 @@ class WebHookRepository(private val api: SetWebHook) :
     }
 
     suspend fun statusWebHook(): StatusWebHook? {
-        return safeApiCell(
+        val getStatusTelegram = safeApiCell(
             call = {
                 api.getStatus().await()
             },
             errorMessage = "Error get status webhook"
         )
+
+        return getStatusTelegram
     }
 }

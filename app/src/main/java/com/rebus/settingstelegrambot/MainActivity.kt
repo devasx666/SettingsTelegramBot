@@ -1,6 +1,8 @@
 package com.rebus.settingstelegrambot
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -29,17 +31,12 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         getAllBots()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        fab_add_bot.show()
-    }
-
     override fun <T> onClickListener(item: T) {
         val bundle = Bundle()
         bundle.putInt(ID, (item as BotsData).id)
         bundle.putString(BOT_TOKEN, (item as BotsData).botToken)
 
-        fab_add_bot.hide()
+        fab_add_bot.visibility = View.GONE
 
         val fragmentTelegramBotActions = TelegramBotActions()
         fragmentTelegramBotActions.arguments = bundle
@@ -91,7 +88,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.container, fragment)
-            .addToBackStack(null)
+            .disallowAddToBackStack()
             .commit()
     }
 }
