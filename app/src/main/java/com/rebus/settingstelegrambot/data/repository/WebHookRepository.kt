@@ -1,5 +1,6 @@
 package com.rebus.settingstelegrambot.data.repository
 
+import com.rebus.settingstelegrambot.data.models.StateSendMessage
 import com.rebus.settingstelegrambot.data.models.StatusWebHook
 import com.rebus.settingstelegrambot.data.path.SetWebHook
 
@@ -23,6 +24,15 @@ class WebHookRepository(private val api: SetWebHook) :
                 api.getStatus().await()
             },
             errorMessage = "Error get status webhook"
+        )
+    }
+
+    suspend fun sendMessageTelegramBot(chatId: String, message: String): StateSendMessage? {
+        return safeApiCell(
+            call = {
+                api.sendMessage(chatId, message).await()
+            },
+            errorMessage = "Error send message!"
         )
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.appodeal.ads.Appodeal
 import com.rebus.settingstelegrambot.data.BOT_TOKEN
 import com.rebus.settingstelegrambot.data.ID
 import com.rebus.settingstelegrambot.data.db.roommodels.BotsData
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initAppodeal()
         init()
         recyclerBotsInit()
         insertDB()
@@ -44,6 +46,20 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         val fragmentTelegramBotActions = TelegramBotActions()
         fragmentTelegramBotActions.arguments = bundle
         openBotActions(fragmentTelegramBotActions)
+    }
+
+    private fun initAppodeal() {
+        Appodeal.setTesting(true)
+
+        Appodeal.initialize(
+            this,
+            "84083493fb7cafcdc831f110b26187401211af24cbcd17b3",
+            Appodeal.INTERSTITIAL,
+        )
+
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
+            Appodeal.show(this, Appodeal.INTERSTITIAL)
+        }
     }
 
     private fun recyclerBotsInit() {

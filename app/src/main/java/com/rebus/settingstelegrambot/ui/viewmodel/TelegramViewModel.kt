@@ -22,22 +22,24 @@ class TelegramViewModel(botToken: String) : ViewModel() {
     var statusWebHook = MutableLiveData<StatusWebHook>()
 
     fun setConnections(botUrl: String, botToken: String) {
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                val connectionTelegram = repository.setWebHook(botUrl, botToken)
-                setWebHook.postValue(connectionTelegram)
-            }
+        scope.launch(Dispatchers.IO) {
+            val connectionTelegram = repository.setWebHook(botUrl, botToken)
+            setWebHook.postValue(connectionTelegram)
         }
     }
 
     fun getStatusConnections() {
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                val webHookInfo = repository.statusWebHook()
-                if (webHookInfo != null) {
-                    statusWebHook.postValue(webHookInfo)
-                }
+        scope.launch(Dispatchers.IO) {
+            val webHookInfo = repository.statusWebHook()
+            if (webHookInfo != null) {
+                statusWebHook.postValue(webHookInfo)
             }
+        }
+    }
+
+    fun sendMessageTelegram(chatId: String, message: String) {
+        scope.launch(Dispatchers.IO) {
+            repository.sendMessageTelegramBot(chatId, message)
         }
     }
 
